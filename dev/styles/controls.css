@@ -1,0 +1,211 @@
+* {
+  box-sizing: border-box;
+}
+/* Toggle */
+
+.ios.toggle-slider {
+    background: #fff;
+    border-radius: 28px;
+    z-index: 1;
+    margin: 3px;
+    box-shadow: 0px 7px 15px 0px rgba(0,0,0,0.25);
+}
+.ios.toggle-bg-on {
+    background: #72d964;
+    border-radius: 32px;
+}
+.ios.toggle-bg-off {
+    border: 3px solid #ececec;
+    background: #fff;
+    border-radius: 32px;
+}
+/* CheckBox */
+
+.label {
+    position: relative;
+    left: 40px;
+    margin: 0;
+    padding: 0px;
+}
+.ios.checkbox-dot {
+    background: #1479f9;
+    border-radius: 23px;
+    z-index: 1;
+}
+.ios.checkbox-dot.disabled {
+    background: #888;
+    border-radius: 23px;
+    z-index: 1;
+}
+.ios.checkbox-background {
+    border: 3px solid #dbdbdb;
+    background: #fff;
+    border-radius: 23px;
+    font-family: Helvetica Neue;
+    font-size: 34px;
+}
+.ios.checkbox-background::selection {
+    background: none;
+}
+.android.checkbox-dot {
+    background: #09c;
+    z-index: 1;
+}
+.android.checkbox-background {
+    border: 2px solid #4d4e4d;
+    background: #000;
+    font-family: Helvetica Neue;
+    font-size: 28px;
+}
+.android.checkbox-background::selection {
+    background: none;
+}
+
+/* Button */
+
+.fa-btn {
+    font-weight: bold;
+    color: #000;
+    background: #ddd;
+    border: 2px solid;
+    border-color: #ccc;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    white-space: pre-wrap;
+}
+.fa-btn:hover {
+    background: #ccc;
+}
+.fa-btn:active {
+  box-shadow: #eee;
+}
+
+/* TextInput */
+
+.rounded-input {
+    border: 3px solid #ccc;
+    border-radius: 6px;
+}
+.text-input {
+    font-weight:bold;
+    padding: 2px 8px;
+}
+.text-input:focus {
+    border: 3px solid #659CEE;
+    outline:0;
+}
+.rounded-input .text-input:focus {
+    border: 2px solid #659CEE;
+}
+.glyphicon {
+    display: block;
+    position: absolute;
+}
+.rounded-input .text-input:focus {
+    border: 2px solid #659CEE;
+}
+
+/* Dropdown */
+
+.dropdown {
+    border: 1px solid rgba(0,0,0,.175);
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,.175);
+    background: white;
+}
+
+/* FilledBar */
+
+.bar-fill-outline {
+    border-radius: 10px;
+    border: 2px solid #ccc;
+}
+.bar-fill {
+    padding: 2px;
+    background-color: #659CEE;
+}
+.bar-fill-left {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.bar-fill-right {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+/* ProgressBar */
+
+.bar-label {
+    font-weight: bold;
+}
+
+/* Range */
+
+.range-ctrl {
+    background: #fff;
+    border: 2px solid #aaa;
+    border-radius: 12px;
+    box-shadow: 0 2px 2px rgba(0,0,0,.175);
+}
+.range-ctrl.active {
+    background: #659CEE;
+}
+
+.bar-label {
+    font-weight: bold;
+}
+
+/* Spinner */
+
+.spin-bar {
+    background: black;
+    border-radius: 6px;
+}
+
+.round {
+    border-radius: 14px;
+    background: #888;
+    box-shadow: 0 2px 2px rgba(0,0,0,.175);
+}
+
+/* RadialMenu */
+
+.radial-btn {
+    cursor: pointer;
+    border: 3px solid #fdfdfd;
+    border-radius: 20px;
+    background: #659CEE;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.7);
+}
+.radial-btn-content {
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    font-size: 24px;
+}
+
+/* SegmentedControl */
+
+.segment-border {
+    border-radius: 6px;
+    border: 3px solid #ccc;
+}
+.segment {
+    border-radius: 0;
+}
+
+.segment-left {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.segment-right {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+

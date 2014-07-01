@@ -1,0 +1,16 @@
+.ios {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+    font-weight: 300;
+}
+
+.ios.fa-btn {
+    border: 1px solid blue;
+}
+
+.ios.fa-btn.delete {
+    color: white;
+    border-radius: 0;
+    font-size: 41px;
+    border: 0;
+    background: #E73026;
+}
