@@ -1,7 +1,7 @@
 // Import core Famous dependencies
 var HeaderFooterLayout = require('famous/views/header-footer-layout');
 var Surface            = require('famous/surface');
-var EventHandler       = require('famous/event-handler');
+var EventHandler       = require('famous/core/EventHandler');
 
 var UpDownTransform = require('up-down-transform');
 

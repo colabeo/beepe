@@ -1,7 +1,7 @@
 var View         = require('famous/view');
 var Transform    = require('famous/transform');
 var Surface      = require('famous/surface');
-var EventHandler = require('famous/event-handler');
+var EventHandler = require('famous/core/EventHandler');
 var Easing       = require('famous/transitions/easing');
 var SoundPlayer  = require('famous/audio/sound-player');
 

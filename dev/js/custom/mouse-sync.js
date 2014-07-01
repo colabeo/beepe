@@ -1,4 +1,4 @@
-var EventHandler = require('famous/event-handler');
+var EventHandler = require('famous/core/EventHandler');
 
 /**
  * @class Handles piped in mouse drag events. Outputs an object with two

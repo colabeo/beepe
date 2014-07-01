@@ -1,5 +1,5 @@
 var FTT = require('famous/input/touch-tracker');
-var FEH = require('famous/event-handler');
+var FEH = require('famous/core/EventHandler');
 
 function TouchSync(targetSync,options) {
     this.targetGet = targetSync;

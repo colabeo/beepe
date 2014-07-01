@@ -1,7 +1,7 @@
 // import famous modules
 var HeaderFooterLayout = require('famous/views/header-footer-layout');
 var Surface            = require('famous/surface');
-var EventHandler       = require('famous/event-handler');
+var EventHandler       = require('famous/core/EventHandler');
 var View               = require('famous/view');
 var EdgeSwapper        = require('famous/views/edge-swapper');
 

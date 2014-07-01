@@ -1,7 +1,7 @@
 // Import core Famous dependencies
 var View         = require('famous/view');
 var Surface      = require('famous/surface');
-var EventHandler = require('famous/event-handler');
+var EventHandler = require('famous/core/EventHandler');
 var Modifier     = require("famous/modifier");
 var Transform    = require("famous/transform");
 

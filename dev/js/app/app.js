@@ -1,6 +1,6 @@
 // import famous dependencies
 var View               = require('famous/view');
-var EventHandler       = require('famous/event-handler');
+var EventHandler       = require('famous/core/EventHandler');
 var RenderNode         = require('famous/render-node');
 var Utility            = require('famous/utilities/utility');
 var Matrix             = require('famous/transform');
