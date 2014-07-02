@@ -1,177 +1,182 @@
-// import famous dependencies
-var View               = require('famous/view');
-var EventHandler       = require('famous/core/EventHandler');
-var RenderNode         = require('famous/render-node');
-var Utility            = require('famous/utilities/utility');
-var Matrix             = require('famous/transform');
-var HeaderFooterLayout = require('famous/views/header-footer-layout');
-var EdgeSwapper        = require('famous/views/edge-swapper');
-var TabBar             = require('famous/widgets/tab-bar');
-//var TitleBar           = require('famous/widgets/title-bar');
-var Templates          = require('templates');
-var RowView     = require('row-view');
-var HeaderBar   = RowView.HeaderBar;
+define(function(require, exports, module) {
 
-function App(options) {
-    // extend from view
-    View.apply(this, arguments);
+    // import famous dependencies
+    var View               = require('famous/core/View');
+    var EventHandler       = require('famous/core/EventHandler');
+    var RenderNode         = require('famous/core/RenderNode');
+    var Utility            = require('famous/utilities/Utility');
+    var Matrix             = require('famous/core/Transform');
+    var HeaderFooterLayout = require('famous/views/HeaderFooterLayout');
+    var EdgeSwapper        = require('famous/views/EdgeSwapper');
+    var TabBar             = require('famous/widgets/TabBar');
+    //var TitleBar           = require('famous/widgets/TitleBar');
 
-    // create the layout
-    this.layout = new HeaderFooterLayout();
+    var Templates          = require('custom/Templates');
+    var RowView            = require('custom/RowView');
+    var HeaderBar          = RowView.HeaderBar;
 
-    // create the header
-    this.header = new HeaderBar(this.options.header);
+    function App(options) {
+        // extend from view
+        View.apply(this, arguments);
 
-    // create the navigation bar
-    this.navigation = new TabBar(this.options.navigation);
+        // create the layout
+        this.layout = new HeaderFooterLayout();
 
-    // create the content area
-    this.contentArea = new EdgeSwapper(this.options.content);
+        // create the header
+        this.header = new HeaderBar(this.options.header);
 
-    // link endpoints of layout to widgets
-    this.layout.id['header'].add(this.header);
-    this.layout.id['footer'].add(Utility.transformInFront).add(this.navigation);
-    this.layout.id['content'].add(Utility.transformBehind).add(this.contentArea);
+        // create the navigation bar
+        this.navigation = new TabBar(this.options.navigation);
 
-    // assign received events to content area
-    this._eventInput.pipe(this.contentArea);
+        // create the content area
+        this.contentArea = new EdgeSwapper(this.options.content);
 
-    // navigation events are app events
-    EventHandler.setOutputHandler(this, this.navigation)
-    this._eventInput = new EventHandler();
-    EventHandler.setInputHandler(this, this._eventInput);
-    this._eventOutput = new EventHandler();
-    EventHandler.setOutputHandler(this, this._eventOutput);
+        // link endpoints of layout to widgets
+        this.layout.id['header'].add(this.header);
+        this.layout.id['footer'].add(Utility.transformInFront).add(this.navigation);
+        this.layout.id['content'].add(Utility.transformBehind).add(this.contentArea);
 
-    // declare the render nodes
-    this._currentSection = undefined;
-    this._sections = {};
-    this._sectionTitles = {};
+        // assign received events to content area
+        this._eventInput.pipe(this.contentArea);
 
-    // Initialize sections if they were passed at instantiation time
-    this.options.sections && this.initSections(this.options.sections);
+        // navigation events are app events
+        EventHandler.setOutputHandler(this, this.navigation)
+        this._eventInput = new EventHandler();
+        EventHandler.setInputHandler(this, this._eventInput);
+        this._eventOutput = new EventHandler();
+        EventHandler.setOutputHandler(this, this._eventOutput);
 
-    // respond to the the selection of a different section
-    this.navigation.on('select', function(data) {
-        this._eventOutput.emit('triggerBackToNoneEditing');
-        this._eventOutput.emit('updateRecent');
-        $('body').removeClass('editing');
-        this._currentSection = data.id;
-        this.header.show(this._sectionTitles[data.id]);
-        this.contentArea.show(this._sections[data.id].get());
-//            if (!this.header._surfaces[data.id].eventHandled) this.onHeaderClick(data);
-    }.bind(this));
+        // declare the render nodes
+        this._currentSection = undefined;
+        this._sections = {};
+        this._sectionTitles = {};
 
-    var recentsChats = options.sections[0].collection;
-    recentsChats.on('all', function(e, model) {
-        var badge = recentsChats.getUnreadCount() || '';
-        var badgeButton = $(this.navigation.buttons[0].options.content);
-        badgeButton.find('.badge').text(badge);
-        this.navigation.buttons[0].setOptions({content: badgeButton[0].outerHTML});
-    }.bind(this));
+        // Initialize sections if they were passed at instantiation time
+        this.options.sections && this.initSections(this.options.sections);
 
-    // assign the layout to this view
-    this._add(this.layout);
-}
-App.prototype = Object.create(View.prototype);
-App.prototype.constructor = App;
+        // respond to the the selection of a different section
+        this.navigation.on('select', function(data) {
+            this._eventOutput.emit('triggerBackToNoneEditing');
+            this._eventOutput.emit('updateRecent');
+            $('body').removeClass('editing');
+            this._currentSection = data.id;
+            this.header.show(this._sectionTitles[data.id]);
+            this.contentArea.show(this._sections[data.id].get());
+    //            if (!this.header._surfaces[data.id].eventHandled) this.onHeaderClick(data);
+        }.bind(this));
 
-App.DEFAULT_OPTIONS = {
-    header: {
-        size: [undefined, 50],
-        inTransition: true,
-        outTransition: true,
-        look: {
-            size: [undefined, 50],
-            classes: ['header']
-        }
-    },
-    navigation: {
-        size: [undefined, 50],
-        direction: Utility.Direction.X,
-        buttons: {
-            onClasses: ['navigation', 'on'],
-            offClasses: ['navigation', 'off'],
-            inTransition: true,
-            outTransition: true
-        }
-    },
-    content: {
-        inTransition: true,
-        outTransition: true,
-        overlap: true
-    },
-    inTransform: Matrix.identity,
-    outTransform: Matrix.identity,
-    inOpacity: 0,
-    outOpacity: 0,
-    inTransition:{duration: 500},
-    outTransition:{duration: 200}
-};
+        var recentsChats = options.sections[0].collection;
+        recentsChats.on('all', function(e, model) {
+            var badge = recentsChats.getUnreadCount() || '';
+            var badgeButton = $(this.navigation.buttons[0].options.content);
+            badgeButton.find('.badge').text(badge);
+            this.navigation.buttons[0].setOptions({content: badgeButton[0].outerHTML});
+        }.bind(this));
 
-App.prototype.getState = function() {
-    return this._currentSection;
-};
-
-App.prototype.section = function(id) {
-    // create the section if it doesn't exist
-    if(!(id in this._sections)) {
-        this._sections[id] = new RenderNode();
-
-        // make it possible to set the section's properties
-        this._sections[id].setOptions = (function(options) {
-            this._sectionTitles[id] = options.title;
-            this.navigation.defineSection(id, {
-                content: Templates.navigationButton(options.navigation)
-            });
-        }).bind(this);
+        // assign the layout to this view
+        this._add(this.layout);
     }
-    return this._sections[id];
-};
+    App.prototype = Object.create(View.prototype);
+    App.prototype.constructor = App;
 
-App.prototype.select = function(id) {
-    this._currentSection = id;
-    if(!(id in this._sections)) return false;
-    this.navigation.select(id);
-    return true;
-};
+    App.DEFAULT_OPTIONS = {
+        header: {
+            size: [undefined, 50],
+            inTransition: true,
+            outTransition: true,
+            look: {
+                size: [undefined, 50],
+                classes: ['header']
+            }
+        },
+        navigation: {
+            size: [undefined, 50],
+            direction: Utility.Direction.X,
+            buttons: {
+                onClasses: ['navigation', 'on'],
+                offClasses: ['navigation', 'off'],
+                inTransition: true,
+                outTransition: true
+            }
+        },
+        content: {
+            inTransition: true,
+            outTransition: true,
+            overlap: true
+        },
+        inTransform: Matrix.identity,
+        outTransform: Matrix.identity,
+        inOpacity: 0,
+        outOpacity: 0,
+        inTransition:{duration: 500},
+        outTransition:{duration: 200}
+    };
 
-// Initialize the sections that were passed in
-App.prototype.initSections = function(sections) {
-    _.each(sections, function(item) {
-        var id = item.title;
-        this.section(id).setOptions({
-            title: item.title,
-            navigation: item.navigation
-        });
-        this.section(id).add(item);
+    App.prototype.getState = function() {
+        return this._currentSection;
+    };
 
-        if(item.pipe) {
-            item.pipe(this._eventInput);
+    App.prototype.section = function(id) {
+        // create the section if it doesn't exist
+        if(!(id in this._sections)) {
+            this._sections[id] = new RenderNode();
+
+            // make it possible to set the section's properties
+            this._sections[id].setOptions = (function(options) {
+                this._sectionTitles[id] = options.title;
+                this.navigation.defineSection(id, {
+                    content: Templates.navigationButton(options.navigation)
+                });
+            }).bind(this);
         }
-    }.bind(this));
-};
+        return this._sections[id];
+    };
 
-App.prototype.onHeaderClick = function(data){
-    this.header._surfaces[data.id].eventHandled = true;
-    this.header._surfaces[data.id].on('click', function(e){
-        switch (e.target.id)
-        {
-            case 'clear-button':
-                this._eventOutput.emit('clearRecent');
-                break;
-            case 'add-contact':
-                this._eventOutput.emit('editContact');
-                break;
-            case 'edit-contact':
-                $('body').toggleClass('editing');
-                break;
-            case 'recent-toggle':
-                this._eventOutput.emit('loadRecent', e);
-                break;
-        }
-    }.bind(this));
-    this.header._surfaces[data.id].pipe(this._eventOutput);
-};
+    App.prototype.select = function(id) {
+        this._currentSection = id;
+        if(!(id in this._sections)) return false;
+        this.navigation.select(id);
+        return true;
+    };
 
-module.exports = App;
+    // Initialize the sections that were passed in
+    App.prototype.initSections = function(sections) {
+        _.each(sections, function(item) {
+            var id = item.title;
+            this.section(id).setOptions({
+                title: item.title,
+                navigation: item.navigation
+            });
+            this.section(id).add(item);
+
+            if(item.pipe) {
+                item.pipe(this._eventInput);
+            }
+        }.bind(this));
+    };
+
+    App.prototype.onHeaderClick = function(data){
+        this.header._surfaces[data.id].eventHandled = true;
+        this.header._surfaces[data.id].on('click', function(e){
+            switch (e.target.id)
+            {
+                case 'clear-button':
+                    this._eventOutput.emit('clearRecent');
+                    break;
+                case 'add-contact':
+                    this._eventOutput.emit('editContact');
+                    break;
+                case 'edit-contact':
+                    $('body').toggleClass('editing');
+                    break;
+                case 'recent-toggle':
+                    this._eventOutput.emit('loadRecent', e);
+                    break;
+            }
+        }.bind(this));
+        this.header._surfaces[data.id].pipe(this._eventOutput);
+    };
+
+    module.exports = App;
+
+});

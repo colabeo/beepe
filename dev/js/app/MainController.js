@@ -1,39 +1,40 @@
 define(function(require, exports, module) {
     // import famous dependencies
     var FamousEngine = require('famous/core/Engine');
-    var Surface = require('famous/core/Surface');
+    var Surface      = require('famous/core/Surface');
     var EventHandler = require('famous/core/EventHandler');
-    var Easing = require('famous/transitions/Easing');
+    var Easing       = require('famous/transitions/Easing');
 
-    var Helpers       = require('custom/Helpers');
+    var Helpers  = require('custom/Helpers');
     var LightBox = require('custom/LightBox');
 
     // import models
-    var Contact = require("models/Contact");
-    var Call = require("models/Call");
+    var Contact  = require("models/Contact");
+    var Call     = require("models/Call");
+    var Settings = require("models/Settings");
 
-    var CallCollection = require("collections/CallCollection");
-    var Settings          = require("collections/Settings");
+
+    var CallCollection    = require("collections/CallCollection");
     var ContactCollection = require('collections/ContactCollection');
 
     // import views
-    var AlertView = require('views/AlertView');
-    var CameraView = require("views/CameraView");
-    var AddContactView = require("views/AddContactView");
-    var OutgoingCallView = require("views/OutgoingCallView");
-    var IncomingCallView = require("views/IncomingCallView");
+    var AlertView         = require('views/AlertView');
+    var CameraView        = require("views/CameraView");
+    var AddContactView    = require("views/AddContactView");
+    var OutgoingCallView  = require("views/OutgoingCallView");
+    var IncomingCallView  = require("views/IncomingCallView");
     var ConnectedCallView = require('views/ConnectedCallView');
 
     var FavoritesSectionView = require('views/FavoritesSectionView');
-    var ChatsSectionView   = require('views/ChatsSectionView');
-    var RecentsSectionView = require('views/RecentsSectionView');
-    var ContactsSectionView = require('views/ContactsSectionView');
-    var DialSectionView  = require('views/DialSectionView');
-    var SettingsSectionView = require('views/SettingsSectionView');
+    var ChatsSectionView     = require('views/ChatsSectionView');
+    var RecentsSectionView   = require('views/RecentsSectionView');
+    var ContactsSectionView  = require('views/ContactsSectionView');
+    var DialSectionView      = require('views/DialSectionView');
+    var SettingsSectionView  = require('views/SettingsSectionView');
 
     // import app
-    var config = require('app/config');
-    var App = require('app/app');
+    var config = require('app/Config');
+    var App    = require('app/App');
 
     var defaultIceConfig = {'iceServers': [
         { url: 'stun:stun.l.google.com:19302' }
